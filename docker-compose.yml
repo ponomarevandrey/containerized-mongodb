@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  mongodb:
+    container_name: mongodb
+    build:
+      context: ./mongodb
+      dockerfile: Dockerfile
+    volumes:
+      - ./mongodb/data/db/:/data/db/
+      - ./mongodb/data/log/:/var/log/mongodb/
+      - ./mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+      - ./mongodb/mongod.conf:/etc/mongod.conf
+    ports:
+      - "27018:27017"
+    env_file:
+      - mongodb.env
