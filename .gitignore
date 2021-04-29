@@ -1,3 +1,6 @@
 # Docker volumes
 mongodb/data/db/*
 mongodb/data/log/*
+
+!mongodb/data/db/.gitignore
+!mongodb/data/log/.gitignore
