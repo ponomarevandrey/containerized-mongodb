@@ -1,6 +1,11 @@
 version: "3.7"
 
 services:
+  # If you add 'node' container here, also add these lines:
+  # env:
+  #   - ./mongodb/.env
+  # (we share Mongo's env vars like username, password, etc., with Node 
+  # to be able to connect to Mongo from Node container)
   mongodb:
     container_name: mongodb
     build:
@@ -14,4 +19,4 @@ services:
     ports:
       - "27018:27017"
     env_file:
-      - mongodb.env
+      - ./mongodb/.env
