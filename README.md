@@ -24,21 +24,32 @@ sudo rm -rf mongodb/data/log/*
 
 > **NOTE:** don't remove `data` dir or its subdirs `db` and `log` cause you need to keep `777` permissions to all of them. If you delete them, Docker will recreate the dir structure (cause it is defined in `docker-compose.yml`) but with different permissions, and this will lead to an error on container startup.
 
-## Logging into container
+## Logging into container and database
 
-As we enabled authentication, we will need to authenticate using credentials from the `.env` file (database 'test', user `test`, password `test`)
+As we enabled authentication, we will need to authenticate using credentials from the `.env` file (database `test`, user `test`, password `test`)
 
 The user we created in our shell script is assigned a [`readWrite` role](https://docs.mongodb.com/manual/reference/built-in-roles/#mongodb-authrole-readWrite) (hence we can't create any new databases, execute `insert` commands on it, etc.). We're allowed to work solely with `test` DB.
 
-```shell
-# Switch to our db
-use test 
+1. Log into container:
+   ```shell
+   docker container exec -it mongodb bash
+   ```
+   or
+   ```shell
+   mongo 127.0.0.1:27018
+   ```
 
-# Authenticate as test
-db.auth('test', 'test')
+2. Log into database
+   ```shell
+   # Switch to our db
+   use test 
 
-# Now we can perform any CRUD operations
-```
+   # Authenticate as test
+   db.auth('test', 'test') 
+
+   # Now we can perform any CRUD operations
+   ```
 
 ## References
+
 * [MongoDB container with Docker Compose](https://zgadzaj.com/development/docker/docker-compose/containers/mongodb)
