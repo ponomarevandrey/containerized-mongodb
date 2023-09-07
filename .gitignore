@@ -4,3 +4,4 @@ mongodb/data/log/*
 
 !mongodb/data/db/.gitignore
 !mongodb/data/log/.gitignore
+*.env
