@@ -5,24 +5,7 @@
 
 ## Starting container from scratch
 
-If you want to start the container from scratch, first you need manually clean everything up left after the old stopped container.
-
-```shell
-docker-compose down
-docker volume prune
-docker image rm mongodb_mongodb
-
-# If needed also delete the mongo image
-# docker image rm mongo
-
-# Now, manually remove the volume data. 
-# It's important to delete both db data and logs, otherwise you'll get an error on `docker-compose up`:
-
-sudo rm -rf mongodb/data/db/*
-sudo rm -rf mongodb/data/log/*
-```
-
-> **NOTE:** don't remove `data` dir or its subdirs `db` and `log` cause you need to keep `777` permissions to all of them. If you delete them, Docker will recreate the dir structure (cause it is defined in `docker-compose.yml`) but with different permissions, and this will lead to an error on container startup.
+If you want to start the container from scratch, first you need manually clean everything up left after the old stopped container: run the shell script `sudo clean-up-old-container`.
 
 ## Logging into container and database
 
@@ -32,11 +15,7 @@ The user we created in our shell script is assigned a [`readWrite` role](https:/
 
 1. Log into container:
    ```shell
-   docker container exec -it mongodb bash
-   ```
-   or
-   ```shell
-   mongo 127.0.0.1:27018
+   docker container exec -it mongodb mongosh # mongosh is MongoDB shell
    ```
 
 2. Log into database
@@ -49,6 +28,12 @@ The user we created in our shell script is assigned a [`readWrite` role](https:/
 
    # Now we can perform any CRUD operations
    ```
+
+## Troubleshooting
+
+If you get an error, check out `mongodb/data/` dir, it should contain two empty dirs: `db` and `log`. If there are none, create them manually and set 777 permissions.
+
+`data/db/` and `data/log/` dirs need to have `777` permissions. If at some point you manually delete them, Docker will recreate the dir structure (cause it is defined in `docker-compose.yml`) but with different permissions, and this will lead to an error on container startup.
 
 ## References
 
