@@ -17,7 +17,6 @@ The user we created in our shell script is assigned a [`readWrite` role](https:/
    ```shell
    docker container exec -it mongodb mongosh # mongosh is MongoDB shell
    ```
-
 2. Log into database
    ```shell
    # Switch to our db
@@ -25,9 +24,8 @@ The user we created in our shell script is assigned a [`readWrite` role](https:/
 
    # Authenticate as test
    db.auth('test', 'test') 
-
-   # Now we can perform any CRUD operations
    ```
+   Now we can perform any CRUD operations
 
 ## Troubleshooting
 
