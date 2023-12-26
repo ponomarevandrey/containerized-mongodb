@@ -1,0 +1,23 @@
+#!/bin/bash
+
+printf '\n# 1. Stop and remove container...\n'
+docker-compose down
+
+printf '\n# 2. Remove its volume (and other volumes not referenced by any container)...\n'
+yes | docker volume prune
+
+printf '\n# 3. Remove image...\n'
+docker image rm mongodb-container_mongodb
+
+# If needed also delete the mongo image:
+# docker image rm mongo
+
+# NRemove volume data (i's important to delete both db data and logs, otherwise 
+# you'll get an error on `docker-compose up`)
+printf '\n# 4. Remove volume data...\n'
+sudo rm -rf  ./mongodb/data/db            ./mongodb/data/log
+mkdir        ./mongodb/data/db            ./mongodb/data/log
+touch        ./mongodb/data/db/.gitignore ./mongodb/data/log/.gitignore
+chmod -R 777 ./mongodb/data/db            ./mongodb/data/log
+
+printf '\nDone\n'
